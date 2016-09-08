@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://belediye.turkiye.gov.tr/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SuKanalizasyon" targetNamespace="http://belediye.turkiye.gov.tr/v2">
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://belediye.turkiye.gov.tr/v2">
+            <xsd:complexType name="arrayOfSokakCaddeBilgisiType">
+                <xsd:sequence maxOccurs="1" minOccurs="1">
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="sokakCaddeBilgisi" type="tns:sokakCaddeBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfMahalleBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="mahalleBilgisi" type="tns:mahalleBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="sokakCaddeBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="sokakCaddeKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sokakCaddeAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="mahalleBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="mahalleKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="mahalleAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="islemSonucType">
+                <xsd:sequence>
+                    <xsd:element name="belediyeKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="5"/>
+                                <xsd:maxLength value="5"/>
+                                <xsd:pattern value="[0-9]{5}"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sonucKodu" nillable="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="4"/>
+                                <xsd:maxLength value="4"/>
+                                <xsd:pattern value="[0-9]{4}"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sonucAciklamasi" nillable="false">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="0"/>
+                                <xsd:maxLength value="100"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="sorguParametreType">
+                <xsd:sequence>
+                    <xsd:element name="belediyeKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="5"/>
+                                <xsd:maxLength value="5"/>
+                                <xsd:pattern value="[0-9]{5}"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="kullaniciAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="5"/>
+                                <xsd:maxLength value="30"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sifre">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="5"/>
+                                <xsd:maxLength value="30"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="ipAdresi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="kisiselSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:sorguParametreType">
+                        <xsd:sequence>
+                            <xsd:element name="tcKimlikNo" nillable="false">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:minLength value="11"/>
+                                        <xsd:maxLength value="11"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="suAboneBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="tcKimlikNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aboneNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="adi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="soyadi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aboneTipi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="adres">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="abonelikDurumu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sayacNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sayacCapi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sayacYeri">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sonOkumaTarihi" type="xsd:date"/>
+                    <xsd:element name="otomatikOdemeBanka">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="borcTutari" type="xsd:decimal"/>
+                    <xsd:element name="gecmisBorcTutari" type="xsd:decimal"/>
+
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="suFaturaBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="aboneNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="donem">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="faturaNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="adi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="soyadi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="faturaTarihi" type="xsd:date"/>
+                    <xsd:element name="sonOdemeTarihi" type="xsd:date"/>
+                    <xsd:element name="faturaDurumu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="odemeTarihi" nillable="true" type="xsd:date"/>
+                    <xsd:element name="odemeYeri">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="m3" type="xsd:decimal"/>
+                    <xsd:element name="kiyasMiktari" type="xsd:decimal"/>
+                    <xsd:element name="tutar" type="xsd:decimal"/>
+                    <xsd:element name="cezaTutari" type="xsd:decimal"/>
+                    <xsd:element name="tenzilat" type="xsd:decimal"/>
+                    <xsd:element name="faturaTutari" type="xsd:decimal"/>
+                    <xsd:element name="aciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="suAnalizParametreType">
+                <xsd:sequence>
+                    <xsd:element name="parametreAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parametreBirim">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parametrelimitTS266">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parametreLimitSB">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parametreDeger">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="parametreAciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfSuAnalizParametreType">
+                <xsd:sequence maxOccurs="1" minOccurs="1">
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="suAnalizParametreBilgisi" type="tns:suAnalizParametreType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="suAnalizSonucuType">
+                <xsd:sequence>
+                    <xsd:element name="numuneYeri">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="analizTarihi" type="xsd:date"/>
+                    <xsd:element name="laboratuvarBilgisi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="analizDegerleri" type="tns:arrayOfSuAnalizParametreType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfSuAnalizSonucuType">
+                <xsd:sequence maxOccurs="1" minOccurs="1">
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="analizSonucListesi" type="tns:suAnalizSonucuType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="suAnalizSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="analizListesi" type="tns:arrayOfSuAnalizSonucuType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="suAnalizSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="suAnalizSorgulamaC" type="tns:suAnalizSorgulamaCType"/>
+            <xsd:element name="ilceSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="ilceSorgulamaC" type="tns:ilceBilgisiSorgulamaCType"/>
+            <xsd:complexType name="arrayOfSuAboneBilgisi">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="suAboneBilgisi" type="tns:suAboneBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfSuFaturaBilgisi">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="suFaturaBilgisi" type="tns:suFaturaBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="suAboneBilgisiCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="suAboneListesi" type="tns:arrayOfSuAboneBilgisi"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+
+            <xsd:complexType name="suFaturaSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="suFaturaListesi" type="tns:arrayOfSuFaturaBilgisi"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="suAboneSorgulamaG" type="tns:kisiselSorgulamaGType"/>
+            <xsd:element name="suAboneSorgulamaC" type="tns:suAboneBilgisiCType"/>
+            <xsd:complexType name="suFaturaSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element name="aboneNo">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="yil">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="suFaturaSorgulamaG" type="tns:suFaturaSorgulamaGType"/>
+            <xsd:element name="suFaturaSorgulamaC" type="tns:suFaturaSorgulamaCType"/>
+            <xsd:complexType name="arizaBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="arizaIlce">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="arizaYeri">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="arizaZamani" type="xsd:dateTime"/>
+                    <xsd:element name="etkilenenYerler">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="tahminiOnarimZamani" nillable="true" type="xsd:dateTime"/>
+                    <xsd:element name="aciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfArizaBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="arizaBilgisi" type="tns:arizaBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="arizaSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="arizaSorgulamaC" type="tns:arizaBilgisiCtype"/>
+            <xsd:complexType name="arizaBilgisiCtype">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="arizaListesi" type="tns:arrayOfArizaBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="gunlukFaaliyetType">
+                <xsd:sequence>
+                    <xsd:element name="faaliyetTipi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="ilce">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="mahalle">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sokakCadde">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfGunlukFaaliyet">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="faaliyetBilgisi" type="tns:gunlukFaaliyetType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="faaliyetBilgisiCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="faaliyetListesi" type="tns:arrayOfGunlukFaaliyet"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="gunlukFaaliyetSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="gunlukFaaliyetSorgulamaC" type="tns:faaliyetBilgisiCType"/>
+            <xsd:complexType name="SOKTipiBilgisi">
+                <xsd:sequence>
+                    <xsd:element name="kod">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="adi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfSOKTipiBilgisi">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="SOKTipi" type="tns:SOKTipiBilgisi"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SOKTipiBilgisiCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="SOKTipiListesi" type="tns:arrayOfSOKTipiBilgisi"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="SOKTipiBilgisiSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="SOKTipiBilgisiSorgulamaC" type="tns:SOKTipiBilgisiCType"/>
+            <xsd:complexType name="ilceBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="ilceKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="ilceAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfIlceBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ilceBilgisi" type="tns:ilceBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ilceBilgisiSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="ilceListesi" type="tns:arrayOfIlceBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+
+            <xsd:complexType name="mahalleSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:sorguParametreType">
+                        <xsd:sequence>
+                            <xsd:element name="ilceKodu">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="sokakCaddeSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:sorguParametreType">
+                        <xsd:sequence>
+                            <xsd:element name="mahalleKodu" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="sokakCaddeSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="sokakCaddeListesi" type="tns:arrayOfSokakCaddeBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="mahalleSorgulamaG" type="tns:mahalleSorgulamaGType"/>
+            <xsd:complexType name="mahalleSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="mahalleListesi" type="tns:arrayOfMahalleBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="mahalleSorgulamaC" type="tns:mahalleSorgulamaCType"/>
+            <xsd:element name="sokakCaddeSorgulamaG" type="tns:sokakCaddeSorgulamaGType"/>
+            <xsd:element name="sokakCaddeSorgulamaC" type="tns:sokakCaddeSorgulamaCType"/>
+            <xsd:complexType name="SOKBasvuruType">
+                <xsd:sequence>
+                    <xsd:element name="ilceKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="mahalleKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="sokakCaddeKodu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="binaNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="haneNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="acikAdres">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="SOKTipi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="aboneNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="adi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="soyadi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="telefonNo">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="eposta">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="SOKDetay">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="dosya" type="xsd:base64Binary"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SOKBasvuruYapGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruBilgileri" type="tns:SOKBasvuruType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="SOKBasvuruDurumType">
+                <xsd:sequence>
+                    <xsd:element name="basvuruTarihi" type="xsd:dateTime"/>
+                    <xsd:element name="basvuruNumarasi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="basvuruDurumu">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="kisaBasvuruMetni">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfSOKBasvuruDurumType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="SOKBasvuruDurum" type="tns:SOKBasvuruDurumType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SOKBasvuruDurumCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="SOKBasvuruDurumListesi" type="tns:arrayOfSOKBasvuruDurumType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="SOKBasvuruDurumSorgulamaG" type="tns:kisiselSorgulamaGType"/>
+            <xsd:element name="SOKBasvuruDurumSorgulamaC" type="tns:SOKBasvuruDurumCType"/>
+            <xsd:complexType name="SOKBasvuruYapCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruTakipNo">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="SOKBasvuruYapG" type="tns:SOKBasvuruYapGType"/>
+            <xsd:element name="SOKBasvuruYapC" type="tns:SOKBasvuruYapCType"/>
+            <xsd:complexType name="SOKBasvuruDetaySorgulaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruNumarasi">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="SOKBasvuruDetaySorgulamaG" type="tns:SOKBasvuruDetaySorgulaGType"/>
+            <xsd:complexType name="SOKBasvuruDetaySorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruNumarasi">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="basvuruTarihi" type="xsd:dateTime"/>
+                            <xsd:element name="basvuruIstek">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="basvuruDurumu">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="basvuruCevapTarihi" type="xsd:date"/>
+                            <xsd:element name="basvuruCevapMetin">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+
+
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="SOKBasvuruDetaySorgulamaC" type="tns:SOKBasvuruDetaySorgulamaCType"/>
+            <xsd:complexType name="barajBilgiType">
+                <xsd:sequence>
+                    <xsd:element name="barajAdi">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="barajKapasite">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="barajDolulukOran" type="xsd:decimal"/>
+                    <xsd:element name="barajAciklama">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string"/>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfBarajBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="barajBilgisi" type="tns:barajBilgiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="barajDolulukBilgisiCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="tarih" type="xsd:date"/>
+                            <xsd:element name="genelDolulukOrani" type="xsd:decimal"/>
+                            <xsd:element name="barajListesi" type="tns:arrayOfBarajBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="barajDolulukSorgulamaG" type="tns:sorguParametreType"/>
+            <xsd:element name="barajDolulukSorgulamaC" type="tns:barajDolulukBilgisiCType"/>
+            <xsd:element name="suAnalizDokumanIndirG" type="tns:sorguParametreType"/>
+            <xsd:complexType name="suAnalizDokumanIndirCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="analizAciklama">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="analizDokumanTipi">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string"/>
+                                </xsd:simpleType>
+                            </xsd:element>
+                            <xsd:element name="analizDokuman" type="xsd:base64Binary"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="suAnalizDokumanIndirC" type="tns:suAnalizDokumanIndirCType"/>
+            <xsd:complexType name="binaBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="binaKodu" type="xsd:string"/>
+                    <xsd:element name="binaAdi" type="xsd:string"/>
+                    <xsd:element name="adresSiraNo" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfBinaBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="binaBilgisi" type="tns:binaBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="binaBilgisiSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:sorguParametreType">
+                        <xsd:sequence>
+                            <xsd:element name="sokakCaddeKodu" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="binaBilgisiSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="binaListesi" type="tns:arrayOfBinaBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="daireBilgisiType">
+                <xsd:sequence>
+                    <xsd:element name="daireNumarasi" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfDaireBilgisiType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="daireBilgisi" type="tns:daireBilgisiType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="daireBilgisiSorgulamaGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:sorguParametreType">
+                        <xsd:sequence>
+                            <xsd:element name="binaKodu" type="xsd:string"/>
+                            <xsd:element name="adresSiraNo" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="daireBilgisiSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="daireListesi" type="tns:arrayOfDaireBilgisiType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="abonelikYapilabilirMiGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element minOccurs="0" name="aboneNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="tesisatNumarasi" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="daireNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="nviAdresNo" nillable="true" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="binaSorgulamaG" type="tns:binaBilgisiSorgulamaGType"/>
+            <xsd:element name="binaSorgulamaC" type="tns:binaBilgisiSorgulamaCType"/>
+            <xsd:element name="daireSorgulamaG" type="tns:daireBilgisiSorgulamaGType"/>
+            <xsd:element name="daireSorgulamaC" type="tns:daireBilgisiSorgulamaCType"/>
+            <xsd:element name="abonelikYapilabilirMiG" type="tns:abonelikYapilabilirMiGType"/>
+            <xsd:element name="abonelikYapilabilirMiC" type="tns:abonelikYapilabilirMiCType"/>
+            <xsd:complexType name="daskKontrolGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element minOccurs="0" name="aboneNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="tesisatNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="kurumAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="nviAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element name="daskPoliceNo" type="xsd:string"/>
+                            <xsd:element name="daskKimlikNo" type="xsd:string"/>
+                            <xsd:element name="mulkSahibiTCKimlikNo" type="xsd:string"/>
+                            
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="daskKontrolCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element minOccurs="0" name="detayListesi" nillable="true" type="tns:arrayOfDetailType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="abonelikBasvuruGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element minOccurs="0" name="aboneNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="tesisatNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="kurumAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="nviAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element name="daskPoliceNo" type="xsd:string"/>
+                            <xsd:element name="daskKimlikNo" type="xsd:string"/>
+                            <xsd:element name="mulkSahibiTCKimlikNo" type="xsd:string"/>
+                            <xsd:element name="dosya" nillable="true" type="xsd:base64Binary"/>
+                            <xsd:element name="telefon" type="xsd:string"/>
+                            <xsd:element name="eposta" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="detayListesi" nillable="true" type="tns:arrayOfDetailType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="abonelikbasvuruCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruNo" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="detayListesi" nillable="true" type="tns:arrayOfDetailType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="abonelikYapilabilirMiCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element minOccurs="0" name="detayListesi" nillable="true" type="tns:arrayOfDetailType"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="detailType">
+                <xsd:sequence>
+                    <xsd:element name="group" type="xsd:string"/>
+                    <xsd:element name="key" type="xsd:string"/>
+                    <xsd:element name="value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="arrayOfDetailType">
+                <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xsd:element name="detay" type="tns:detailType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="sozlesmeIndirGType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:kisiselSorgulamaGType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruNo" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="aboneNo" nillable="true" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="sozlesmeIndirCtype">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="sozlesmeDosya" nillable="true" type="xsd:base64Binary"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="abonelikBasvuruSorgulamaG" type="tns:kisiselSorgulamaGType"/>
+            <xsd:complexType name="AbonelikBasvuruSorgulamaCType">
+                <xsd:complexContent>
+                    <xsd:extension base="tns:islemSonucType">
+                        <xsd:sequence>
+                            <xsd:element name="basvuruNumarasi" type="xsd:string"/>
+                            <xsd:element name="basvuruTarihi" type="xsd:dateTime"/>
+
+                            <xsd:element minOccurs="0" name="aboneNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="tesisatNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="kurumAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="nviAdresNo" nillable="true" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="acikadres" nillable="true" type="xsd:string"/>
+                            <xsd:element name="basvuruDurumu" type="xsd:string"/>
+                            <xsd:element name="basvuruCevapTarihi" nillable="true" type="xsd:date"/>
+                            <xsd:element name="tahakkukTutari" nillable="true" type="xsd:decimal"/>
+                            <xsd:element name="basvuruAciklama" type="xsd:string"/>
+                            <xsd:element minOccurs="0" name="detayListesi" nillable="true" type="tns:arrayOfDetailType"/>
+
+
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:element name="abonelikBasvuruSorgulamaC" type="tns:AbonelikBasvuruSorgulamaCType"/>
+            <xsd:element name="abonelikBasvuruG" type="tns:abonelikBasvuruGType"/>
+            <xsd:element name="abonelikBasvuruC" type="tns:abonelikbasvuruCType"/>
+            <xsd:element name="daskKontrolG" type="tns:daskKontrolGType"/>
+            <xsd:element name="daskKontrolC" type="tns:daskKontrolCType"/>
+            <xsd:element name="sozlesmeIndirG" type="tns:sozlesmeIndirGType"/>
+            <xsd:element name="sozlesmeIndirC" type="tns:sozlesmeIndirCtype"/>
+        </xsd:schema>
+    </types>
+    <message name="analizSorgulamaRequest">
+        <part element="tns:suAnalizSorgulamaG" name="part1"/>
+    </message>
+    <message name="analizSorgulamaResponse">
+        <part element="tns:suAnalizSorgulamaC" name="part1"/>
+    </message>
+    <message name="suAboneSorgulamaRequest">
+        <part element="tns:suAboneSorgulamaG" name="part1"/>
+    </message>
+    <message name="suAboneSorgulamaResponse">
+        <part element="tns:suAboneSorgulamaC" name="part1"/>
+    </message>
+    <message name="suFaturaSorgulamaRequest">
+        <part element="tns:suFaturaSorgulamaG" name="part1"/>
+    </message>
+    <message name="suFaturaSorgulamaResponse">
+        <part element="tns:suFaturaSorgulamaC" name="part1"/>
+    </message>
+    <message name="arizaSorgulamaRequest">
+        <part element="tns:arizaSorgulamaG" name="part1"/>
+    </message>
+    <message name="arizaSorgulamaResponse">
+        <part element="tns:arizaSorgulamaC" name="part1"/>
+    </message>
+    <message name="gunlukFaaliyetSorgulamaRequest">
+        <part element="tns:gunlukFaaliyetSorgulamaG" name="part1"/>
+    </message>
+    <message name="gunlukFaaliyetSorgulamaResponse">
+        <part element="tns:gunlukFaaliyetSorgulamaC" name="part1"/>
+    </message>
+    <message name="SOKTipiSorgulamaRequest">
+        <part element="tns:SOKTipiBilgisiSorgulamaG" name="part1"/>
+    </message>
+    <message name="SOKTipiSorgulamaResponse">
+        <part element="tns:SOKTipiBilgisiSorgulamaC" name="part1"/>
+    </message>
+    <message name="ilceSorgulamaRequest">
+        <part element="tns:ilceSorgulamaG" name="part1"/>
+    </message>
+    <message name="ilceSorgulamaResponse">
+        <part element="tns:ilceSorgulamaC" name="part1"/>
+    </message>
+    <message name="mahalleSorgulamaRequest">
+        <part element="tns:mahalleSorgulamaG" name="part1"/>
+    </message>
+    <message name="mahalleSorgulamaResponse">
+        <part element="tns:mahalleSorgulamaC" name="part1"/>
+    </message>
+    <message name="sokakCaddeSorgulamaRequest">
+        <part element="tns:sokakCaddeSorgulamaG" name="part1"/>
+    </message>
+    <message name="sokakCaddeSorgulamaResponse">
+        <part element="tns:sokakCaddeSorgulamaC" name="part1"/>
+    </message>
+    <message name="SOKBasvuruYapRequest">
+        <part element="tns:SOKBasvuruYapG" name="part1"/>
+    </message>
+    <message name="SOKBAsvuruYapResponse">
+        <part element="tns:SOKBasvuruYapC" name="part1"/>
+    </message>
+    <message name="SOKBasvuruDurumSorgulamaRequest">
+        <part element="tns:SOKBasvuruDurumSorgulamaG" name="part1"/>
+    </message>
+    <message name="SOKBasvuruDurumSorgulamaResponse">
+        <part element="tns:SOKBasvuruDurumSorgulamaC" name="part1"/>
+    </message>
+    <message name="SOKBasvuruDetaySorgulamaRequest">
+        <part element="tns:SOKBasvuruDetaySorgulamaG" name="part1"/>
+    </message>
+    <message name="SOKBasvuruDetaySorgulamaResponse">
+        <part element="tns:SOKBasvuruDetaySorgulamaC" name="part1"/>
+    </message>
+    <message name="barajDolulukSorgulamaRequest">
+        <part element="tns:barajDolulukSorgulamaG" name="part1"/>
+    </message>
+    <message name="barajDolulukSorgulamaResponse">
+        <part element="tns:barajDolulukSorgulamaC" name="part1"/>
+    </message>
+    <message name="suAnalizDokumanIndirRequest">
+        <part element="tns:suAnalizDokumanIndirG" name="part1"/>
+    </message>
+    <message name="suAnalizDokumanIndirResponse">
+        <part element="tns:suAnalizDokumanIndirC" name="part1"/>
+    </message>
+    <message name="binaSorgulamaRequest">
+        <part element="tns:binaSorgulamaG" name="part1"/>
+    </message>
+    <message name="binaSorgulamaResponse">
+        <part element="tns:binaSorgulamaC" name="part1"/>
+    </message>
+    <message name="daireSorgulamaRequest">
+        <part element="tns:daireSorgulamaG" name="part1"/>
+    </message>
+    <message name="daireSorgulamaResponse">
+        <part element="tns:daireSorgulamaC" name="part1"/>
+    </message>
+    <message name="abonelikYapilabilirMiRequest">
+        <part element="tns:abonelikYapilabilirMiG" name="part1"/>
+    </message>
+    <message name="abonelikYapilabilirMiResponse">
+        <part element="tns:abonelikYapilabilirMiC" name="part1"/>
+    </message>
+    <message name="abonelikBasvuruRequest">
+        <part element="tns:abonelikBasvuruG" name="part1"/>
+    </message>
+    <message name="abonelikBasvuruResponse">
+        <part element="tns:abonelikBasvuruC" name="part1"/>
+    </message>
+    <message name="daskKontrolRequest">
+        <part element="tns:daskKontrolG" name="part1"/>
+    </message>
+    <message name="daskKontrolResponse">
+        <part element="tns:daskKontrolC" name="part1"/>
+    </message>
+    <message name="sozlesmeIndirRequest">
+        <part element="tns:sozlesmeIndirG" name="part1"/>
+    </message>
+    <message name="sozlesmeIndirResponse">
+        <part element="tns:sozlesmeIndirC" name="part1"/>
+    </message>
+    <message name="abonelikBasvuruSorgulamaRequest">
+        <part element="tns:abonelikBasvuruSorgulamaG" name="part1"/>
+    </message>
+    <message name="abonelikBasvuruSorgulamaResponse">
+        <part element="tns:abonelikBasvuruSorgulamaC" name="part1"/>
+    </message>
+
+
+
+    <portType name="SuKanalizasyonPortType">
+        <operation name="guncelSuAnalizSorgula">
+            <input message="tns:analizSorgulamaRequest" name="input1"/>
+            <output message="tns:analizSorgulamaResponse" name="output1"/>
+        </operation>
+        <operation name="suAboneSorgula">
+            <input message="tns:suAboneSorgulamaRequest" name="input2"/>
+            <output message="tns:suAboneSorgulamaResponse" name="output2"/>
+        </operation>
+        <operation name="suFaturaSorgula">
+            <input message="tns:suFaturaSorgulamaRequest" name="input3"/>
+            <output message="tns:suFaturaSorgulamaResponse" name="output3"/>
+        </operation>
+        <operation name="arizaSorgulama">
+            <input message="tns:arizaSorgulamaRequest" name="input4"/>
+            <output message="tns:arizaSorgulamaResponse" name="output4"/>
+        </operation>
+        <operation name="gunlukFaaliyetSorgula">
+            <input message="tns:gunlukFaaliyetSorgulamaRequest" name="input5"/>
+            <output message="tns:gunlukFaaliyetSorgulamaResponse" name="output5"/>
+        </operation>
+        <operation name="SOKTipiSorgula">
+            <input message="tns:SOKTipiSorgulamaRequest" name="input6"/>
+            <output message="tns:SOKTipiSorgulamaResponse" name="output6"/>
+        </operation>
+        <operation name="ilceSorgula">
+            <input message="tns:ilceSorgulamaRequest" name="input7"/>
+            <output message="tns:ilceSorgulamaResponse" name="output7"/>
+        </operation>
+        <operation name="mahalleSorgula">
+            <input message="tns:mahalleSorgulamaRequest" name="input8"/>
+            <output message="tns:mahalleSorgulamaResponse" name="output8"/>
+        </operation>
+        <operation name="sokakCaddeSorgula">
+            <input message="tns:sokakCaddeSorgulamaRequest" name="input9"/>
+            <output message="tns:sokakCaddeSorgulamaResponse" name="output9"/>
+        </operation>
+        <operation name="SOKBasvuruYap">
+            <input message="tns:SOKBasvuruYapRequest" name="input10"/>
+            <output message="tns:SOKBAsvuruYapResponse" name="output10"/>
+        </operation>
+        <operation name="SOKBasvuruDurumSorgula">
+            <input message="tns:SOKBasvuruDurumSorgulamaRequest" name="input11"/>
+            <output message="tns:SOKBasvuruDurumSorgulamaResponse" name="output11"/>
+        </operation>
+        <operation name="SOKBasvuruDetaySorgula">
+            <input message="tns:SOKBasvuruDetaySorgulamaRequest" name="input12"/>
+            <output message="tns:SOKBasvuruDetaySorgulamaResponse" name="output12"/>
+        </operation>
+        <operation name="barajDolulukSorgula">
+            <input message="tns:barajDolulukSorgulamaRequest" name="input13"/>
+            <output message="tns:barajDolulukSorgulamaResponse" name="output13"/>
+        </operation>
+        <operation name="suAnalizDokumanIndir">
+            <input message="tns:suAnalizDokumanIndirRequest" name="input14"/>
+            <output message="tns:suAnalizDokumanIndirResponse" name="output14"/>
+        </operation>
+        <wsdl:operation name="binaSorgula">
+            <wsdl:input message="tns:binaSorgulamaRequest" name="input15"/>
+            <wsdl:output message="tns:binaSorgulamaResponse" name="output15"/>
+        </wsdl:operation>
+        <wsdl:operation name="daireSorgula">
+            <wsdl:input message="tns:daireSorgulamaRequest" name="input16"/>
+            <wsdl:output message="tns:daireSorgulamaResponse" name="output16"/>
+        </wsdl:operation>
+        <wsdl:operation name="abonelikYapilabilirMi">
+            <wsdl:input message="tns:abonelikYapilabilirMiRequest" name="input17"/>
+            <wsdl:output message="tns:abonelikYapilabilirMiResponse" name="output17"/>
+        </wsdl:operation>
+        <wsdl:operation name="daskKontrol">
+            <wsdl:input message="tns:daskKontrolRequest" name="input18"/>
+            <wsdl:output message="tns:daskKontrolResponse" name="output18"/>
+        </wsdl:operation>
+        <wsdl:operation name="sozlesmeIndir">
+            <wsdl:input message="tns:sozlesmeIndirRequest" name="input19"/>
+            <wsdl:output message="tns:sozlesmeIndirResponse" name="output19"/>
+        </wsdl:operation>
+                <wsdl:operation name="abonelikBasvuru">
+            <wsdl:input message="tns:abonelikBasvuruRequest" name="input20"/>
+            <wsdl:output message="tns:abonelikBasvuruResponse" name="output20"/>
+        </wsdl:operation>
+                <wsdl:operation name="abonelikBasvuruSorgula">
+            <wsdl:input message="tns:abonelikBasvuruSorgulamaRequest" name="input21"/>
+            <wsdl:output message="tns:abonelikBasvuruSorgulamaResponse" name="output21"/>
+        </wsdl:operation>
+
+
+
+    </portType>
+    <binding name="SuKanalizasyonPortTypeBinding" type="tns:SuKanalizasyonPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="guncelSuAnalizSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/suAnalizSorgula" style="document"/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="suAboneSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/suAboneSorgula" style="document"/>
+            <input name="input2">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="suFaturaSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/suFaturaSorgula" style="document"/>
+            <input name="input3">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="arizaSorgulama">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/arizaSorgula" style="document"/>
+            <input name="input4">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output4">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="gunlukFaaliyetSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/gunlukFaaliyetSorgula" style="document"/>
+            <input name="input5">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output5">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SOKTipiSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/SOKTipiSorgula" style="document"/>
+            <input name="input6">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output6">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="ilceSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/ilceSorgula" style="document"/>
+            <input name="input7">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output7">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="mahalleSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/mahalleSorgula" style="document"/>
+            <input name="input8">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output8">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="sokakCaddeSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/sokakCaddeSorgula" style="document"/>
+            <input name="input9">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output9">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SOKBasvuruYap">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/SOKBasvuruYap" style="document"/>
+            <input name="input10">
+                <soap:body/>
+            </input>
+            <output name="output10">
+                <soap:body/>
+            </output>
+        </operation>
+        <operation name="SOKBasvuruDurumSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/SOKBasvuruDurumSorgula" style="document"/>
+            <input name="input11">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output11">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SOKBasvuruDetaySorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/SOKBasvuruDetaySorgula" style="document"/>
+            <input name="input12">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output12">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="barajDolulukSorgula">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/barajDolulukSorgula" style="document"/>
+            <input name="input13">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output13">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="suAnalizDokumanIndir">
+            <soap:operation soapAction="http://belediye.turkiye.gov.tr/v2/suAnalizDokumanIndir" style="document"/>
+            <input name="input14">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output14">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="binaSorgula">
+            <soap:operation style="document"/>
+            <input name="input15">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output15">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="daireSorgula">
+            <soap:operation style="document"/>
+            <input name="input16">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output16">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="abonelikYapilabilirMi">
+            <soap:operation/>
+            <input name="input17">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output17">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="daskKontrol">
+            <soap:operation/>
+            <input name="input18">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output18">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="sozlesmeIndir">
+            <soap:operation/>
+            <input name="input19">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output19">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="abonelikBasvuru">
+            <soap:operation/>
+            <input name="input20">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output20">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="abonelikBasvuruSorgula">
+            <soap:operation/>
+            <input name="input21">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output21">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="eDevletSuKanalizasyonServis">
+        <port binding="tns:SuKanalizasyonPortTypeBinding" name="SuKanalizasyonPortTypeBindingPort">
+            <soap:address location="http://localhost:7001/DiskiEdevletWS/SuKanalizasyonPortTypeBindingPort"/>
+        </port>
+    </service>
+</definitions>
